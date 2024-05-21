@@ -1,0 +1,39 @@
+# video de referencia
+# https://www.youtube.com/watch?v=Bbn8WPyPbVE
+
+en
+conf t
+
+!dar de alta todas las vlans
+vlan 10
+vlan 20
+vlan 30
+vlan 50
+exit
+
+!habilitar ip routing en el switch
+ip routing
+
+# ir a interfaz G1/0/5 para convertirla en intefaz de ruteo (capa 3)
+int g1/0/5
+no switchport
+ip address 192.128.1.13 255.255.255.252
+no shut
+
+! configurar para edificio de tecnologias
+int g1/0/1
+no switchport
+ip address 192.128.1.5 255.255.255.252
+no shut
+
+!edificio administracion
+int g1/0/2
+no switchport
+ip address 192.128.1.1 255.255.255.252
+no shut
+
+!edificio manufactura
+int g1/0/3
+no switchport
+ip address 192.128.1.9 255.255.255.252
+no shut

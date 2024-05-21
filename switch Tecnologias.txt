@@ -1,0 +1,5 @@
+!
+int g1/0/1
+no switchport
+ip address 192.128.1.6 255.255.255.252
+no shut

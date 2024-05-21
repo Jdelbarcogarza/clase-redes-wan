@@ -1,0 +1,23 @@
+!configurar default gateway en vlan 10
+en
+conf t
+!habilitar ip routing en el switch
+ip routing
+int vlan 10
+
+!default gateway para la red. Hay que agregar una ip a la vlan
+ip address 192.168.0.1 255.255.255.224
+exit
+
+!poner ip en rutas
+int g1/0/1
+no switchport
+ip address 192.128.1.2 255.255.255.252
+no shut
+
+# NOTA: la mascara para estas IPs no esta bien porque la red 0.1 esta ocupada. Necesitamos otras redes si queremos usar esa mascara de red
+! TODO SITIO2
+int g1/0/2
+no switchport
+ip address 192.100.0.2 255.255.255.224
+no shut

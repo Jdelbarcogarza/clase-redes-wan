@@ -1,0 +1,46 @@
+en
+config t
+
+!crear vlan Empleados
+vlan 30
+name Empleados
+exit
+
+!crear vlan IOT
+vlan 35
+name IOT
+exit
+
+!asignar puerto a vlan 30
+interface g1/0/3
+switchport mode access
+switchport access vlan 30
+exit
+
+!asignar puerto a vlan 35
+interface g1/0/4
+switchport mode access
+switchport access vlan 35
+exit
+
+
+!SVI a vlan 30
+interface vlan 30
+!agregar ip y mascara correcta
+ip address 0.0.0.0 255.0.0.0
+no shutdown
+exit
+
+!SVI a vlan 35
+interface vlan 35
+!agregar ip y mascara correcta
+ip address 0.0.0.0 255.0.0.0
+no shutdown
+exit
+
+!access list se da deny la red de la vlan junto con la wild card
+access-list 1 deny 0.0.0.0 0.0.0.255
+access-list 1 permit any
+interface g1/0/1.1
+ip access-group 1 out
+exit
