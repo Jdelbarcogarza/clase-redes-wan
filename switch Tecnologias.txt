@@ -1,5 +1,19 @@
-!
+!permitir routing en switch
+ip routing
+
+!puerto a site 1
 int g1/0/1
 no switchport
 ip address 192.128.1.6 255.255.255.252
 no shut
+
+!puerto a site 2
+int g1/0/2
+no switchport
+ip address 192.128.1.21 255.255.255.252
+no shut
+
+!configuracion de ospf
+router ospf 8
+network 192.128.1.4 0.0.0.3 area 0
+network 192.128.1.20 0.0.0.3 area 0

@@ -1,0 +1,7 @@
+!configuracion de firwall
+
+!ip para sitio 1
+192.128.1.14
+
+!ip para sitio 2
+192.128.1.30

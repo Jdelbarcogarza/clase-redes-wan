@@ -1,6 +1,22 @@
 en
 config t
 
+!permitir routing en switch
+ip routing
+
+!configuración con switch de core
+!conexion a site 1
+int g1/0/1
+no switchport
+ip address 192.128.1.10 255.255.255.252
+no shut
+
+!conexion a site2
+int g1/0/2
+no switchport
+ip address 192.128.1.26 255.255.255.252
+no shut
+
 !crear vlan Empleados
 vlan 30
 name Empleados
@@ -23,6 +39,8 @@ switchport mode access
 switchport access vlan 35
 exit
 
+! TODO vlan visitantes
+
 
 !SVI a vlan 30
 interface vlan 30
@@ -44,3 +62,9 @@ access-list 1 permit any
 interface g1/0/1.1
 ip access-group 1 out
 exit
+
+
+!configuracion de ospf
+router ospf 8
+network 192.128.1.8 0.0.0.3 area 0
+network 192.128.1.24 0.0.0.3 area 0
