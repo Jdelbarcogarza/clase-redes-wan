@@ -1,12 +1,18 @@
 !configurar default gateway en vlan 10
 en
 conf t
+
+!crear vlans de empleados y visitantes
+vlan 10
+vlan 11
+exit
+
 !habilitar ip routing en el switch
 ip routing
 int vlan 10
 
 !default gateway para la red. Hay que agregar una ip a la vlan
-ip address 192.168.0.1 255.255.255.224
+ip address 172.50.1.1 255.255.255.0
 exit
 
 !poner ip en rutas
@@ -20,7 +26,14 @@ no switchport
 ip address 192.128.1.18 255.255.255.252
 no shut
 
+!configurar intervlan routing en vlans de empleados
+int g1/0/3
+switchport mode trunk
+switchport trunk allowed vlan 10,20
+no shut
+
 router ospf 8
 network 192.128.1.0 0.0.0.3 area 0
 network 192.128.1.16 0.0.0.3 area 0
 ! TODO: ANUNCIAR VLANS
+network 172.50.1.0 0.0.0.255 area 0

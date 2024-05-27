@@ -1,5 +1,15 @@
+en
+conf t
+
 !permitir routing en switch
 ip routing
+
+vlan 20
+vlan 21
+
+!configurar default gateway
+int vlan 20
+ip address 172.50.2.1 255.255.255.0
 
 !puerto a site 1
 int g1/0/1
@@ -13,7 +23,16 @@ no switchport
 ip address 192.128.1.21 255.255.255.252
 no shut
 
+!configurar intervlan routing en vlans de empleados
+int g1/0/3
+switchport mode trunk
+switchport trunk allowed vlan 10,20
+no shut
+
+
 !configuracion de ospf
 router ospf 8
 network 192.128.1.4 0.0.0.3 area 0
 network 192.128.1.20 0.0.0.3 area 0
+!aqui anuncio el default gateway de la red de empleados
+network 172.50.2.0 0.0.0.255 area 0
