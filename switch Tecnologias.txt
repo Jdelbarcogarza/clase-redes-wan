@@ -9,7 +9,7 @@ vlan 21
 
 !configurar default gateway
 int vlan 20
-ip address 172.50.2.1 255.255.255.0
+ip address 172.50.20.1 255.255.255.0
 
 !puerto a site 1
 int g1/0/1
@@ -35,4 +35,29 @@ router ospf 8
 network 192.128.1.4 0.0.0.3 area 0
 network 192.128.1.20 0.0.0.3 area 0
 !aqui anuncio el default gateway de la red de empleados
-network 172.50.2.0 0.0.0.255 area 0
+network 172.50.20.0 0.0.0.255 area 0
+network 172.50.21.0 0.0.0.255 area 0
+
+
+!configuracion de DHCP
+!excluir primeras 10 ips
+ip dhcp excluded-address 172.50.20.1 172.50.20.10
+ip dhcp pool TechEmpleados
+network 172.50.20.0 255.255.255.0
+default-router 172.50.20.1
+dns-server 192.128.2.4
+!TODO: domain-name administracion.com
+!COMANDO NO SE CONOCE EN PACKET TRACER. AGREGAR EN DOCUMENTO que lease dura jornada laboral.
+!lease 0 8
+
+
+!configuracion de DHCP
+!excluir primeras 10 ips
+ip dhcp excluded-address 172.50.21.1 172.50.21.10
+ip dhcp pool TechVisitantes
+network 172.50.21.0 255.255.255.0
+default-router 172.50.21.1
+dns-server 192.128.2.4
+!TODO: domain-name administracion.com
+!COMANDO NO SE CONOCE EN PACKET TRACER. AGREGAR EN DOCUMENTO que lease dura jornada laboral.
+!lease 0 8

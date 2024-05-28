@@ -19,24 +19,32 @@ no shut
 
 !crear vlan Empleados
 vlan 30
-name Empleados
+name ManufacturaE
 exit
 
 !crear vlan IOT
-vlan 35
+vlan 32
 name IOT
 exit
 
 !asignar puerto a vlan 30
 interface g1/0/3
-switchport mode access
-switchport access vlan 30
+switchport mode trunk
+!switchport access vlan 30
 exit
 
-!asignar puerto a vlan 35
+int vlan 30
+ip address 172.50.30.1 255.255.255.0
+exit
+
+!asignar puerto a vlan 32
 interface g1/0/4
-switchport mode access
-switchport access vlan 35
+switchport mode trunk
+!switchport access vlan 32
+exit
+
+int vlan 32
+ip address 172.50.32.1 255.255.255.0
 exit
 
 ! TODO vlan visitantes
@@ -68,3 +76,8 @@ exit
 router ospf 8
 network 192.128.1.8 0.0.0.3 area 0
 network 192.128.1.24 0.0.0.3 area 0
+! LA RED DE PLANTA IOT NO SE ANUNCIA PARA EVITAR QUE OTROS EDIFICIOS SE CONECTEN
+! NO HAY NECESIDAD DE QUE SE CONECTEN. SOLO EL ADMIN SE PUEDE CONECTAR Y ESTE ESTÁ ADENTRO
+! DE LA PLANTA YA EN LA VLAN 30.
+!network 172.50.32.0 0.0.0.255 area 0
+network 172.50.30.0 0.0.0.255 area 0

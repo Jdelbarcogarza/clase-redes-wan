@@ -11,9 +11,13 @@ exit
 ip routing
 int vlan 10
 
-!default gateway para la red. Hay que agregar una ip a la vlan
-ip address 172.50.1.1 255.255.255.0
+!default gateway para la red. Hay que agregar una ip a la vlan 10 (Empleados)
+ip address 172.50.10.1 255.255.255.0
 exit
+
+!habilitar gateway para la red de Visitantes. Esto es vlan 11
+int vlan 11
+ip address 172.50.11.1 255.255.255.0
 
 !poner ip en rutas
 int g1/0/1
@@ -36,4 +40,29 @@ router ospf 8
 network 192.128.1.0 0.0.0.3 area 0
 network 192.128.1.16 0.0.0.3 area 0
 ! TODO: ANUNCIAR VLANS
-network 172.50.1.0 0.0.0.255 area 0
+network 172.50.10.0 0.0.0.255 area 0
+network 172.50.11.0 0.0.0.255 area 0
+
+
+!configuracion de DHCP
+!excluir primeras 10 ips
+ip dhcp excluded-address 172.50.10.1 172.50.10.10
+ip dhcp pool AdminEmpleados
+network 172.50.10.0 255.255.255.0
+default-router 172.50.10.1
+dns-server 192.128.2.4
+!TODO: domain-name administracion.com
+!COMANDO NO SE CONOCE EN PACKET TRACER. AGREGAR EN DOCUMENTO que lease dura jornada laboral.
+!lease 0 8
+
+
+!configuracion de DHCP
+!excluir primeras 10 ips
+ip dhcp excluded-address 172.50.11.1 172.50.11.10
+ip dhcp pool AdminVisitantes
+network 172.50.11.0 255.255.255.0
+default-router 172.50.11.1
+dns-server 192.128.2.4
+!TODO: domain-name administracion.com
+!COMANDO NO SE CONOCE EN PACKET TRACER. AGREGAR EN DOCUMENTO que lease dura jornada laboral.
+!lease 0 8

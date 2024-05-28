@@ -57,3 +57,9 @@ network 192.128.1.8 0.0.0.3 area 0
 network 192.128.1.12 0.0.0.3 area 0
 network 192.128.2.0 0.0.0.15 area 0
 
+!configuración de HSRP
+int g1/0/4
+standby 1 ip 192.128.2.10
+do standby br
+standby 1 priority 200
+standby 1 preempt

@@ -61,3 +61,11 @@ network 192.128.2.0 0.0.0.15 area 0
 !anunciarlas a traves de ospf.
 !aplicar standby en servidores. (Ahorita está en esta red 192.128.2.0 el 
 default gateway. Hay que hacer que cambie)
+
+
+!configurar HSRP (este es el switch secundario)
+int g1/0/4
+standby 1 ip 192.128.2.10
+do standby br
+standby 1 priority 100
+standby 1 preempt
